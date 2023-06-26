@@ -1,11 +1,5 @@
 // fetch the fav super hero from local storage  
 let sh =0;
-// let abcd = document.getElementById("abc");
-// abcd.innerText = "heyy";
-// let favSuperHeroList = document.getElementById('display-fav-superhero');
-// // fetchFavHero().then(() => {
-// //     });
-// favSuperHeroList.innerHTML= "heyyvvbchjvbhjc";
 async function fetchFavHero() {
     let favSuperHeroList = document.getElementById('display-fav-superhero');
     for (let i = 0; i < localStorage.length; ++i) {

@@ -7,7 +7,7 @@ const md5Digest = CryptoJS.MD5(textToHash).toString();
 // making the url ---for creators and charactors
 let n =1; // for creators url
 let urlArray=[]; // storing all the creators url in the array
-for(let n=1;n<5;n++){
+for(let n=1;n<60;n++){
     // let url1 = `https://gateway.marvel.com:443/v1/public/characters?&ts=${tss}&apikey=e15b92c51249c56e943234373783b485&hash=${md5Digest}`;
      let url1 =`http://gateway.marvel.com/v1/public/comics?creators=${n}&ts=${tss}&apikey=e15b92c51249c56e943234373783b485&hash=${md5Digest}`;
     urlArray.push(url1);
@@ -27,10 +27,6 @@ const fetchAllHero = async () =>{
        
         const response = await fetch (url);
         res = await response.json();
-        // console.log(res.data.results.length);
-        // if(res.status =="Ok"){
-        //     console.log("yes");
-        // }
        
             for(i=0 ; i<res.data.results.length ; i++){
               let {id,title,prices,images,characters} = res.data.results[i];
@@ -46,15 +42,6 @@ const fetchAllHero = async () =>{
             }
             // console.log(comicsArray);
         }
-
-        // const charactrURL = `https://gateway.marvel.com:443/v1/public/characters?&ts=${tss}&apikey=e15b92c51249c56e943234373783b485&hash=${md5Digest}`;
-        // const charctrURI = (res.data.results[0].characters.collectionURI) + (`?ts=${tss}&apikey=e15b92c51249c56e943234373783b485&hash=${md5Digest}`);
-        // const resp2 = await fetch(charctrURI);
-        //  res2 =await resp2.json();
-        // console.log("data2 is =" + res2.data);
-        
-
-
         comicsArray.forEach(function(obj) {
             for (var key in obj) {
               if (obj.hasOwnProperty(key)) {
@@ -92,11 +79,7 @@ const  fetchComics = async()=> {
     // if name is empty display random Super Heros
 
     if(name.length != 0){
-        //search via api
-        // let response = await fetch(url + `search/${name}`);
-        // // get response to json
-        // let resJson = await response.json();
-        // let superHero = resJson.results;
+        
         let superHero =[];
 
         for(let i =0;i<comicsArray.length;i++){
@@ -106,14 +89,6 @@ const  fetchComics = async()=> {
 
         // send searched elements to display superhero flex 
         for (let sh of superHero) {
-
-            // if Superhero is not present in Local Storage
-            // let likeButton = `<span id="${sh.id}"><span id="like-button" onclick="addFav(${sh.id})"><i class="fa-solid fa-heartbeat"></i></span> </span>`;
-
-            // if Superhero is present in Local Storage
-            // if(localStorage.getItem(sh.id)){
-            //     likeButton = `<span id="${sh.id}"><span id="dislike" onclick="removeFav(${sh.id})" ><i class="fa-solid fa-heartbeat"></i></span> </span>`;
-            // }
 
             superHeroList.innerHTML =
                 `<div id="superhero-box">
