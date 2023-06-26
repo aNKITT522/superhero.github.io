@@ -68,29 +68,7 @@ const fetchAllHero = async () =>{
             console.log(Error);
     }
 }
-// await fetchAllHero();
 
-// add fav function
-// function addFav(superHeroID){
-//     //add fav to local storage
-//     localStorage.setItem(superHeroID, superHeroID);
-//     console.log("added to fav : " +  localStorage.getItem(superHeroID));
-//     let likeButton = document.getElementById(superHeroID);
-
-//     // change like button to dislike button
-//     likeButton.innerHTML = `<span id="dislike" onclick="removeFav(${superHeroID})" ><i class="fa-solid fa-heartbeat"></i></span>`
-// }
-
-// remove fav function
-// function removeFav(superHeroID){
-//     //remove fav from local storege
-//     localStorage.removeItem(superHeroID);
-//     console.log("removed from fav : " +  localStorage.getItem(superHeroID));
-//     let likeButton = document.getElementById(superHeroID);
-//     //change dislike button to like button
-//     likeButton.innerHTML = `<span id="like-button" onclick="addFav(${superHeroID})" ><i class="fa-solid fa-heartbeat"></i></span>`
-
-// }
 
 // fetch Super Hero using SuperHero Api
 const  fetchComics = async()=> {
