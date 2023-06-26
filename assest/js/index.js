@@ -1,16 +1,7 @@
-let res = 0;
-// let res2 =0;
-//generate a time stamp on every loading
 const tss = Date.now();
-// console.log(tss);
-
-
 // Generate MD5 digest by tss+private key + public key
 const textToHash = tss + "df2eefb907a9afc5fdda8999d7bc556076e8ea58" + "e15b92c51249c56e943234373783b485";
 const md5Digest = CryptoJS.MD5(textToHash).toString();
-// console.log(md5Digest);
-
-
 
 
 // making the url ---for creators and charactors
@@ -23,13 +14,6 @@ for(let n=1;n<5;n++){
     console.log(url1);
     
 }
-// console.log(urlArray);
-//let url =  `https://gateway.marvel.com:443/v1/public/characters?&ts=${tss}&apikey=e15b92c51249c56e943234373783b485&hash=${md5Digest}`;
-
-// let url1 =`http://gateway.marvel.com/v1/public/comics?characters=${n}&ts=${tss}&apikey=e15b92c51249c56e943234373783b485&hash=${md5Digest}`;
-
-// let url2 =`http://gateway.marvel.com/v1/public/comics?creators=32&ts=${tss}&apikey=e15b92c51249c56e943234373783b485&hash=${md5Digest}`;
-
 
 // fetching every url -->
 let comicsArray = [];
@@ -84,55 +68,101 @@ const fetchAllHero = async () =>{
             console.log(Error);
     }
 }
+// await fetchAllHero();
 
-const  fetchHero = async () =>{
-    // const response = await fetch (url1);
-    // res = await response.json();
-  let searchInputValue = document.getElementById("search-input").value;
-  console.log(searchInputValue);
-  for(let i =0;i<comicsArray.length;i++){
-    if(comicsArray[i]["title"] === searchInputValue){
-        alert(`The price of the comic is ${comicsArray[i].prices} dollars`);
-        // const characterImg = await collectionsURI(comicsArray[i]);
-        const container = document.createElement('container');
-        container.id = "dispalyImage";
-        const imageDiv =document.createElement('div');
-        imageDiv.className="image-div";
-         let imageUrl = `${comicsArray[i].images}`;  // Replace with the actual image URL
-        //  let imageUrl = characterImg;  // Replace with the actual image URL
-         let img = document.createElement('img');
-         img.src = imageUrl;
-         img.alt="image not found";
+// add fav function
+// function addFav(superHeroID){
+//     //add fav to local storage
+//     localStorage.setItem(superHeroID, superHeroID);
+//     console.log("added to fav : " +  localStorage.getItem(superHeroID));
+//     let likeButton = document.getElementById(superHeroID);
 
-         let favButton = document.createElement("button");
-         favButton.innerHTML = `<i class="fa-solid fa-heartbeat"></i>`;
-         favButton.setAttribute("id","favButton");
-         favButton.addEventListener("click", (e) => addFav(e));
-
-         let infoButton = document.createElement("button");
-         infoButton.innerHTML = `<i class="fa-solid  fa-info"></i>`;
-         infoButton.setAttribute("id","infoButton");
-         
-         infoButton.addEventListener("click", (e) => showInfo(e));
-
-         // Append the image element to a container in the DOM
-        // let container = document.getElementById('image-container');  // Replace 'image-container' with the ID of your container element
-         container.appendChild(img);
-         container.appendChild(favButton);
-         container.appendChild(infoButton);
-         document.body.append(container);
-
-        break;
-    }                                   
-  }
-}
-
-// let fav= [];
-
-// function addFav(){
-//     let searchInputValue = document.getElementById("searchInput").value;
-            
+//     // change like button to dislike button
+//     likeButton.innerHTML = `<span id="dislike" onclick="removeFav(${superHeroID})" ><i class="fa-solid fa-heartbeat"></i></span>`
 // }
+
+// remove fav function
+// function removeFav(superHeroID){
+//     //remove fav from local storege
+//     localStorage.removeItem(superHeroID);
+//     console.log("removed from fav : " +  localStorage.getItem(superHeroID));
+//     let likeButton = document.getElementById(superHeroID);
+//     //change dislike button to like button
+//     likeButton.innerHTML = `<span id="like-button" onclick="addFav(${superHeroID})" ><i class="fa-solid fa-heartbeat"></i></span>`
+
+// }
+
+// fetch Super Hero using SuperHero Api
+const  fetchComics = async()=> {
+    //get search input
+    let name = document.getElementById('search-input').value;
+    // let url = `https://superheroapi.com/api.php/6054796184647336/`
+
+
+    let superHeroList = document.getElementById('display-superhero-comics');
+
+    
+    // remove the previous searched element's div
+    if (superHeroList.childElementCount != 0) {
+        let childs = superHeroList.childElementCount;                
+        for (let j = 0; j < childs; j++) {
+            superHeroList.children[0].remove();
+        }
+    }
+
+
+    // if name is empty display random Super Heros
+
+    if(name.length != 0){
+        //search via api
+        // let response = await fetch(url + `search/${name}`);
+        // // get response to json
+        // let resJson = await response.json();
+        // let superHero = resJson.results;
+        let superHero =[];
+
+        for(let i =0;i<comicsArray.length;i++){
+            if(comicsArray[i]["title"] === name){
+                 superHero[0] = comicsArray[i];
+            }}
+
+        // send searched elements to display superhero flex 
+        for (let sh of superHero) {
+
+            // if Superhero is not present in Local Storage
+            // let likeButton = `<span id="${sh.id}"><span id="like-button" onclick="addFav(${sh.id})"><i class="fa-solid fa-heartbeat"></i></span> </span>`;
+
+            // if Superhero is present in Local Storage
+            // if(localStorage.getItem(sh.id)){
+            //     likeButton = `<span id="${sh.id}"><span id="dislike" onclick="removeFav(${sh.id})" ><i class="fa-solid fa-heartbeat"></i></span> </span>`;
+            // }
+
+            superHeroList.innerHTML =
+                `<div id="superhero-box">
+                    <div id="superhero-image">
+                        <a href="">
+                            <img src="${sh.images}" alt="superhero image">
+                        </a>
+                    </div>
+                    <div>
+                        <a href="" >
+
+                            Name : ${sh.title}
+                            <br>
+                            Price : ${sh.prices}
+                            <br>
+                        </a>` + 
+                        `<span> <a href="" ></a> </span>
+                        </div>
+                    </div>` + superHeroList.innerHTML;
+        }
+    
+
+    } 
+}
+   
+
+
 function showSuggestions() {
     var input = document.getElementById("search-input");
     var filter = input.value.toLowerCase();
@@ -155,17 +185,4 @@ function showSuggestions() {
       suggestionsList.appendChild(listItem);
     });
 }
-// abedc4476801911c003a6b388cf0042c
 
-let res2 =0;
-const collectionsURI = async (chr) =>{
-  const charctrURI = chr.characters;
-  
-        const resp2 = await fetch(charctrURI);
-          res2 = await resp2.json();
-        //  console.log('response 2 =' + res2);
-        let wiki = res2.data.results[0];
-         let dataa = (res2.data.results[0].thumbnail.path) +"/portrait_uncanny"+"." + (res2.data.results[0].thumbnail.extension);
-        console.log("data2 is =" + dataa);
-        return dataa;
-}
